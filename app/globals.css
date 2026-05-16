@@ -1,0 +1,190 @@
+@import "tailwindcss";
+
+/* Note: Removed the manual Google Fonts @import from the bottom of the file 
+  because fonts are already being loaded via next/font in layout.tsx.
+*/
+
+@theme {
+  /* ── Colors ── */
+  --color-blue:     #1B5EFF;
+  --color-blue-dim: #1045d6;
+
+  /* ── Fonts ── */
+  /* We define the tokens here so they are available as utility classes like font-heading. */
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+
+  /* ── Border radius ── */
+  --radius-card:  16px;
+  --radius-card2: 24px;
+
+  /* ── Animations ── */
+  --animate-fade-up:      fadeUp 0.7s cubic-bezier(.25,.46,.45,.94) forwards;
+  --animate-float-a:      floatA 10s ease-in-out infinite;
+  --animate-float-b:      floatB 13s ease-in-out infinite;
+  --animate-ping-slow:    pingSlow 2s ease-in-out infinite;
+  --animate-scroll-left:  scrollLeft 28s linear infinite;
+  --animate-trust-scroll: trustScroll 22s linear infinite;
+  --animate-drift:        drift 14s ease-in-out infinite;
+}
+
+/* ── Light mode CSS variables (base) ── */
+:root {
+  --bg:      #F7F8FC;
+  --bg2:     #ECEEF6;
+  --card:    #FFFFFF;
+  --text:    #0A0C16;
+  --muted:   #58637A;
+  --faint:   #99A3BE;
+  --border:  #DCE1EF;
+  --border2: #C6CEDF;
+  --sh:      rgba(10,12,22,.06);
+  --sh2:     rgba(10,12,22,.14);
+  --blue-pale: rgba(27,94,255,.09);
+  --blue-glow: rgba(27,94,255,.14);
+}
+
+/* ── Dark mode CSS variables ── */
+[data-theme="dark"] {
+  --bg:      #06080F;
+  --bg2:     #0C0F1C;
+  --card:    #111826;
+  --text:    #EBF0FF;
+  --muted:   #8390AA;
+  --faint:   #3A4560;
+  --border:  #1A2138;
+  --border2: #243050;
+  --sh:      rgba(0,0,0,.45);
+  --sh2:     rgba(0,0,0,.7);
+  --blue-pale: rgba(27,94,255,.13);
+  --blue-glow: rgba(27,94,255,.18);
+}
+
+/* ── Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  /* This property was moved here because it is not allowed inside @theme. */
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  background: var(--bg);
+  color: var(--text);
+  transition: background .45s, color .45s;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.65;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #1B5EFF; border-radius: 2px; }
+
+/* ── Keyframes ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatA {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-28px); }
+}
+@keyframes floatB {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(20px); }
+}
+@keyframes pingSlow {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%     { opacity: .35; transform: scale(.6); }
+}
+@keyframes scrollLeft {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes trustScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes drift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%     { transform: translate(20px,-18px) scale(1.06); }
+  66%     { transform: translate(-14px,14px) scale(.94); }
+}
+@keyframes arrowDrift {
+  0%,100% { transform: translateY(-50%) translateX(0); }
+  50%     { transform: translateY(-50%) translateX(18px); }
+}
+@keyframes arrowDriftL {
+  0%,100% { transform: translateY(-50%) translateX(0); }
+  50%     { transform: translateY(-50%) translateX(-18px); }
+}
+
+/* ── Utility classes ── */
+.animate-fade-up     { animation: var(--animate-fade-up); }
+.animate-float-a     { animation: var(--animate-float-a); }
+.animate-float-b     { animation: var(--animate-float-b); }
+.animate-ping-slow   { animation: var(--animate-ping-slow); }
+.animate-scroll-left { animation: var(--animate-scroll-left); }
+.animate-trust-scroll { animation: var(--animate-trust-scroll); }
+
+/* ── Scroll reveal ── */
+.rv {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .68s cubic-bezier(.25,.46,.45,.94), transform .68s cubic-bezier(.25,.46,.45,.94);
+}
+.rv.on { opacity: 1; transform: translateY(0); }
+.rv.d1 { transition-delay: .1s; }
+.rv.d2 { transition-delay: .2s; }
+.rv.d3 { transition-delay: .3s; }
+.rv.d4 { transition-delay: .4s; }
+.rv.d5 { transition-delay: .5s; }
+
+/* ── Cursor halo ── */
+#halo {
+  position: fixed;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--blue-glow) 0%, transparent 68%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%,-50%);
+  transition: left .09s, top .09s;
+}
+@media(max-width:860px){ #halo { display: none; } }
+
+/* ── Ghost arrow SVG bg decorations ── */
+.g-arrow {
+  position: absolute;
+  right: 4vw; top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: .04;
+  animation: arrowDrift 7s ease-in-out infinite;
+}
+.g-arrow.left {
+  right: auto; left: 3vw;
+  animation-name: arrowDriftL;
+}
+[data-theme="dark"] .g-arrow { opacity: .07; }
+
+/* ── Section heading shared ── */
+.s-label {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #1B5EFF;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.s-label::before {
+  content: '';
+  display: inline-block;
+  width: 18px; height: 2px;
+  background: #1B5EFF;
+}
