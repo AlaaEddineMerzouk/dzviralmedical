@@ -4,19 +4,19 @@ import {
   testimonialsQuery,
   insightsQuery,
   founderQuery,
-  trustedClientsQuery,
+  trustedByQuery,
 } from '@/lib/queries'
 import HomeClient from './HomeClient'
 
 export const revalidate = 60
 
 export default async function Home() {
-  const [cases, testimonials, insights, founder, clients] = await Promise.all([
+  const [cases, testimonials, insights, founder, trustedBy] = await Promise.all([
     client.fetch(caseStudiesQuery),
     client.fetch(testimonialsQuery),
     client.fetch(insightsQuery),
     client.fetch(founderQuery),
-    client.fetch(trustedClientsQuery),
+    client.fetch(trustedByQuery),
   ])
 
   return (
@@ -25,7 +25,7 @@ export default async function Home() {
       testimonials={testimonials}
       insights={insights}
       founder={founder}
-      clients={clients}
+      trustedBy={trustedBy}
     />
   )
 }

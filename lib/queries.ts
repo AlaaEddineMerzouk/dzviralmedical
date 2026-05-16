@@ -28,8 +28,9 @@ export const founderQuery = groq`
     "photo": photo.asset->url
   }
 `
-export const trustedClientsQuery = groq`
-  *[_type == "trustedClient"] | order(order asc) {
-    _id, name, order
+
+export const trustedByQuery = groq`
+  *[_type == "trustedBy"] | order(order asc) {
+    _id, name
   }
 `

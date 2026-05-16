@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import Nav from '@/components/Nav'
 import Hero from '@/components/Hero'
 import Services from '@/components/Services'
-import type { TrustedClient } from '@/components/Services'
 import Process from '@/components/Process'
 import Cases from '@/components/Cases'
 import Founder from '@/components/Founder'
@@ -50,18 +49,22 @@ export interface Founder {
   chips: string[]
 }
 
+export interface TrustedBy {
+  _id: string
+  name: string
+}
+
 interface Props {
   cases: CaseStudy[]
   testimonials: Testimonial[]
   insights: Insight[]
   founder: Founder | null
-  clients: TrustedClient[]          // ← ADDED
+  trustedBy: TrustedBy[]
 }
 
 // ── Component ──────────────────────────────────────────────────────────────
 
-export default function HomeClient({ cases, testimonials, insights, founder, clients }: Props) {
-  //                                                                            ^^^^^^^ ADDED
+export default function HomeClient({ cases, testimonials, insights, founder, trustedBy }: Props) {
   const [modalOpen, setModalOpen] = useState(false)
 
   // Cursor halo
@@ -92,7 +95,7 @@ export default function HomeClient({ cases, testimonials, insights, founder, cli
       <main>
         <Nav onOpenModal={openModal} />
         <Hero onOpenModal={openModal} />
-        <Services onOpenModal={openModal} clients={clients} />  {/* ← ADDED clients */}
+        <Services onOpenModal={openModal} trustedBy={trustedBy} />
         <Process />
         <Cases
           cases={cases}

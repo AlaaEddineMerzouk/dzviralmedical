@@ -4,15 +4,14 @@ import { useEffect, useRef } from 'react'
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
-export interface TrustedClient {
+export interface TrustedBy {
   _id: string
   name: string
-  order: number
 }
 
 interface ServicesProps {
   onOpenModal: () => void
-  clients?: TrustedClient[]
+  trustedBy?: TrustedBy[]
 }
 
 // ── Fallback (shown if CMS has no entries yet) ────────────────────────────
@@ -125,15 +124,15 @@ const systems = [
 
 // ── Component ─────────────────────────────────────────────────────────────
 
-export default function Services({ onOpenModal, clients = [] }: ServicesProps) {
+export default function Services({ onOpenModal, trustedBy = [] }: ServicesProps) {
   const problemRef = useRef<HTMLElement>(null)
   const systemsRef = useRef<HTMLElement>(null)
   useReveal(problemRef as React.RefObject<HTMLElement>)
   useReveal(systemsRef as React.RefObject<HTMLElement>)
 
-  // Use CMS clients if available, otherwise fall back to hardcoded list
-  const names = clients.length > 0
-    ? clients.map((c) => c.name)
+  // Use CMS data if available, otherwise fall back to hardcoded list
+  const names = trustedBy.length > 0
+    ? trustedBy.map((c) => c.name)
     : FALLBACK_CLIENTS
 
   // Duplicate for seamless infinite scroll
@@ -164,7 +163,6 @@ export default function Services({ onOpenModal, clients = [] }: ServicesProps) {
 
       {/* ── PROBLEM SECTION ── */}
       <section id="problem" ref={problemRef as React.RefObject<HTMLElement>} className="py-[100px] px-[5vw] relative overflow-hidden bg-[var(--bg)]">
-        {/* Bg blobs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <div className="absolute rounded-full" style={{ width:380,height:380,top:-80,right:-50,background:'radial-gradient(circle,rgba(27,94,255,.065) 0%,transparent 70%)',animation:'drift 13s ease-in-out infinite' }} />
           <div className="absolute rounded-full" style={{ width:220,height:220,bottom:-60,left:'5%',background:'radial-gradient(circle,rgba(27,94,255,.065) 0%,transparent 70%)',animation:'drift 10s ease-in-out infinite',animationDelay:'-4s' }} />
@@ -229,7 +227,6 @@ export default function Services({ onOpenModal, clients = [] }: ServicesProps) {
 
       {/* ── SYSTEMS SECTION ── */}
       <section id="systems" ref={systemsRef as React.RefObject<HTMLElement>} className="py-[100px] px-[5vw] relative overflow-hidden bg-[var(--bg2)]">
-        {/* Bg blobs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <div className="absolute rounded-full" style={{ width:320,height:320,top:-60,left:-30,background:'radial-gradient(circle,rgba(27,94,255,.065) 0%,transparent 70%)',animation:'drift 12s ease-in-out infinite',animationDelay:'-2s' }} />
           <div className="absolute rounded-full" style={{ width:200,height:200,bottom:-50,right:'8%',background:'radial-gradient(circle,rgba(27,94,255,.065) 0%,transparent 70%)',animation:'drift 9s ease-in-out infinite',animationDelay:'-5s' }} />
