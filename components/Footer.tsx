@@ -142,6 +142,18 @@ export default function Footer({ onOpenModal }: FooterProps) {
       >
         <span>© 2025 DZ Viral Medical. All rights reserved.</span>
         <span>Built for Algerian Healthcare Professionals</span>
+        <span>
+          Designed &amp; built by{' '}
+          <a
+            href="https://github.com/AlaaEddineMerzouk/velteix-agency"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold transition-colors duration-250 hover:text-[#1B5EFF]"
+            style={{ color: 'rgba(255,255,255,.6)' }}
+          >
+            Velteix Agency
+          </a>
+        </span>
       </div>
     </footer>
   )
