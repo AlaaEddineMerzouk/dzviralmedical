@@ -15,8 +15,8 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'DZ Viral Medical',
-  description: 'Generated with Next.js',
+  title: 'DZ Viral Medical | Agence Marketing Médical en Algérie',
+  description: 'Agence spécialisée en marketing médical en Algérie. Nous aidons les cliniques à devenir le premier choix dans leur ville.',
 }
 
 export default function RootLayout({
