@@ -15,7 +15,7 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'My Website',
+  title: 'DZ Viral Medical',
   description: 'Generated with Next.js',
 }
 
